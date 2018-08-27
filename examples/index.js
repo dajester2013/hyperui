@@ -2,27 +2,27 @@ import HyperComponent from "../esm/widgets/component/HyperComponent";
 import { List } from "../esm/widgets/list/List";
 
 import config from "../esm/util/decorator/config";
+import { bind, hyper } from "hyperhtml";
 
 
-// @config({
-// 	model: {
-// 		greeting:"hi"
-// 		,subject:"world"
-// 	}
-// })
-// class SimpleExample extends HyperComponent {
+@config({
+	model: {
+		greeting:"hi"
+		,subject:"world"
+	}
+})
+class SimpleExample extends HyperComponent {
 
-// 	renderTemplate() {
-// 		return this.tpl`
-// 			<span id="simple-example">${this.model.greeting} ${this.model.subject}!</span>
-// 		`;
-// 	}
+	renderTemplate() {
+		return this.tpl`
+			<span id="simple-example">${this.model.greeting} ${this.model.subject}!</span>
+		`;
+	}
 
-// }
+}
 
-// window.SimpleExample = SimpleExample;
-
-// window.example = SimpleExample.attach(document.getElementById("todo"));
+window.example = new SimpleExample();
+document.body.appendChild(window.example.render());
 
 
 class Todo extends HyperComponent {
@@ -46,7 +46,7 @@ class Todo extends HyperComponent {
 
 		this.doneList = new class extends List {
 			renderItem(item,index) {
-				return this.getTpl(item,":todonewrap")`<li>
+				return this.getTpl(item)`<li>
 
 					<span style=${{textDecoration:"line-through"}}>${item.text}</span>
 					
@@ -60,7 +60,7 @@ class Todo extends HyperComponent {
 
 		this.todoList = new class extends List {
 			renderItem(item,index) {
-				return this.getTpl(item,":todowrap")`<li>
+				return this.getTpl(item)`<li>
 
 					${item.text}
 					
@@ -100,20 +100,19 @@ class Todo extends HyperComponent {
 	}
 
 	renderTemplate() {
-		return this.tpl`
+		return this.tpl`<div>
 			<hr />
-
 			${this.input}
-			
+				
 			${this.addTodoButton}
 
 			${this.doneList.render()}
 			${this.todoList.render()}
-
 			<hr />
-		`;
+		</div>`;
 	}
 
 }
 
-window.t = Todo.attach(document.getElementById("todo"));
+window.todo = new Todo();
+document.body.appendChild(todo.render());
