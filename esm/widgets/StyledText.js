@@ -6,16 +6,7 @@ export default class StyledText extends HyperComponent {
 		super({
 			model:{
 				text:text
-				,style:new Proxy(style, {
-					set: function(obj,prop,val) {
-						obj[prop]=val;
-						self.render();
-						return true;
-					}
-					,enumerate(target) {
-						return Object.keys(target)[Symbol.iterator]();
-					}
-				})
+				,style:{}
 			}
 		});
 		let self = this;
