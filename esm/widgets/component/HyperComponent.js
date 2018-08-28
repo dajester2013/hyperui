@@ -3,33 +3,36 @@ import config from "../../util/decorator/config";
 import "../../util/hyper-intents";
 
 const SYM_MODEL = Symbol("HyperModel");
-const SYM_ATTRS = Symbol("HyperAttributes");
 const SYM_RENDERED = Symbol("HyperComponentRendered");
+const SYM_LAST_TARGET = Symbol("HyperComponentLastTarget");
 
+const PLACEHOLDER = hyper`<hc-placeholder/>`;
 
-const PLACEHOLDER = hyper`<place-holder/>`;
-
-/**
- * a generic proxy handler that watches for sets and forces a rerender
- */
-let updateHandler = (self) => {return {
+const createUpdateHandler = (self) => {return {
 	set(obj,prop,value) {
-		obj[prop] = isPrimitive(value) ? value : new Proxy(value,updateHandler(self));
+		obj[prop] = isPrimitive(value) ? value : new Proxy(value,createUpdateHandler(self));
 
-		// TODO: keep from rendering too often
-		self.rendered && self.render();
+		self.update();
 
 		return true;
 	}
 	,deleteProperty(obj,prop,value) {
 		obj[prop] = undefined;
 
-		// TODO: keep from rendering too often
-		self.rendered && self.render();
+		self.update();
 
 		return true;
 	}
 }};
+
+
+export const createComponentUpdateProxy = (targetComponent, proxyTarget, revocable=false) => {
+	for (let key in proxyTarget) if (!isPrimitive(proxyTarget[key]))
+		proxyTarget[key] = createComponentUpdateProxy(targetComponent, proxyTarget[key]);
+	return revocable	? Proxy.revocable(proxyTarget, createUpdateHandler(targetComponent)) 
+										: new Proxy(proxyTarget, createUpdateHandler(targetComponent));
+};
+
 
 function isPrimitive(v) {
 	return v == null || (typeof v !== 'function' && typeof v !== 'object');
@@ -54,18 +57,11 @@ export default class HyperComponent {
 
 	set model(model) {
 		this[SYM_MODEL] && this[SYM_MODEL].revoke();
-
-		let deepProxy = (x) => {
-			for (let key in x) if (!isPrimitive(x[key]))
-				x[key] = deepProxy(x[key]);
-			return new Proxy(x, updateHandler(this));
-		}
-
-		this[SYM_MODEL] = Proxy.revocable(deepProxy(model||{}), updateHandler(this));
-		this.rendered && this.render();
+		this[SYM_MODEL] = Proxy.revocable(createComponentUpdateProxy(this, model||{}), createUpdateHandler(this));
+		this.rendered && this.renderTo();
 	}
 	get model() {
-		return this[SYM_MODEL].proxy;
+		return this[SYM_MODEL] && this[SYM_MODEL].proxy || null;
 	}
 
 	set rendered(rendered) {}
@@ -73,28 +69,37 @@ export default class HyperComponent {
 		return this[SYM_RENDERED];
 	}
 
-	renderTemplate() {
+	render() {
 		return wire(this)``;
 	}
 
-	render(target) {
-		var tpl = this.renderTemplate();
-
-		this[SYM_RENDERED] = true;
-
+	renderTo(target=this[SYM_LAST_TARGET]/*this.getLastTarget()*/, tpl=this.render()) {
+		
+		this.markRendered();
 		if (target) {
+			this[SYM_LAST_TARGET]=target;
 			bind(target)`${tpl}`;
-		} else {
-			return tpl;
 		}
+		
+		return tpl;
 	}
 
+	update() {
+		this.renderTo();
+	}
 
+	markRendered() {
+		this[SYM_RENDERED] = true;
+	}
+
+	getLastTarget() {
+		return this[SYM_LAST_TARGET];
+	}
 
 
 	static attach(to, ...config) {
 		var instance = new this(...config);
-		instance.render(to);
+		instance.renderTo(to);
 		return instance;
 	}
 }

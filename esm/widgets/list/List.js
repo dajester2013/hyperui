@@ -6,7 +6,7 @@ import config from "../../util/decorator/config";
 		items: []
 	}
 })
-export class List extends HyperComponent {
+export default class List extends HyperComponent {
 
 	constructor(config) {
 		Object.assign(config)
@@ -18,7 +18,7 @@ export class List extends HyperComponent {
 		return this.getTpl(item)`<li hyper-attrs=${item.attrs}>${item.text}</li>`;
 	}
 
-	renderTemplate(){
+	render(){
 		let makeNodes = node=>typeof node == "object" ? node : {
 			text:node
 			,attrs:{}

@@ -4,6 +4,11 @@ export default function config(cfg,defaultConfig) {
 	return function(target,key,descriptor) {
 		if(!descriptor)  {
 			return class extends target {
+
+				static get name() {
+					return target.name;
+				}
+
 				constructor(config, ...rest) {
 					let _cfg;
 					

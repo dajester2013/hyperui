@@ -1,5 +1,8 @@
 import HyperComponent from "./component/HyperComponent";
 
+/**
+ * 
+ */
 export default class StyledText extends HyperComponent {
 	
 	constructor(text, style={}) {
