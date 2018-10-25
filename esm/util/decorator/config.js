@@ -1,20 +1,14 @@
-import deepmerge from "deepmerge";
-
-export default function config(cfg,defaultConfig) {
+export default function config(cfg) {
 	return function(target,key,descriptor) {
 		if(!descriptor)  {
 			return class extends target {
-				constructor(config, ...rest) {
-					let _cfg;
-					
-					if (typeof config == "object")
-						_cfg = deepmerge(cfg, config);
-					else {
-						_cfg=deepmerge(cfg,{});
-						_cfg[defaultConfig] = config;
-					}
 
-					return super(_cfg, ...rest);
+				static get name() {
+					return target.name;
+				}
+
+				constructor(config, ...rest) {
+					super(typeof config == "object" && Object.assign({}, cfg, config) || config, ...rest);
 				}
 			}
 		}

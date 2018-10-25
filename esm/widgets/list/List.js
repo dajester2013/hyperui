@@ -14,8 +14,10 @@ export class List extends HyperComponent {
 		super(config);
 	}
 
+	get items() {return this.model.items;}
+
 	renderItem(item) {
-		return this.getTpl(item)`<li hyper-attrs=${item.attrs}>${item.text}</li>`;
+		return this.getTpl("html",item)`<li hyper-attrs=${item.attrs}>${item.text}</li>`;
 	}
 
 	renderTemplate(){
