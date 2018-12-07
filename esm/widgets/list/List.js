@@ -6,7 +6,7 @@ import config from "../../util/decorator/config";
 		items: []
 	}
 })
-export class List extends HyperComponent {
+export default class List extends HyperComponent {
 
 	constructor(config) {
 		Object.assign(config)

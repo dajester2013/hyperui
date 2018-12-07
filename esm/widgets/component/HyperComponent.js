@@ -38,6 +38,7 @@ function isPrimitive(v) {
 /**
  * Unlike an element, this is a view that can be rendered to a specific element
  */
+@config({})
 export default class HyperComponent {
 
 	constructor(config={}) {

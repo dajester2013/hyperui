@@ -1,0 +1,25 @@
+$panel-border-width: 1px;
+$panel-border-color:#ccc;
+
+:local {
+    .panel {
+        position: relative;
+        padding:0px;
+        border:$panel-border-width solid $panel-border-color;
+    
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        
+        .header {
+            margin:0px;
+            top:0px;
+            border-bottom:$panel-border-width solid $panel-border-color;
+        }
+
+        .body {
+            flex: 1;
+            // border:1px solid green;
+        }
+    }
+}
