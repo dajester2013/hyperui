@@ -1,5 +1,5 @@
 import deepmerge from "deepmerge";
-import HyperComponent from "../../widgets/component/HyperComponent";
+
 import config from "./config";
 
 export default function autoElement(tag, autoElConfig) {

@@ -1,4 +1,4 @@
-import HyperComponent from "./component/HyperComponent";
+import HyperComponent from "../../HyperComponent";
 
 export default class PlainText extends HyperComponent {
 	

@@ -1,12 +1,13 @@
-import HyperComponent from "../component/HyperComponent";
+import HyperComponent from "../../HyperComponent";
 import config from "../../util/decorator/config";
+import Container from "../container/Container";
 
 @config({
 	model: {
 		items: []
 	}
 })
-export default class List extends HyperComponent {
+export default class List extends Container {
 
 	constructor(config) {
 		Object.assign(config)
@@ -18,7 +19,7 @@ export default class List extends HyperComponent {
 		return this.getTpl(item)`<li hyper-attrs=${item.attrs}>${item.text}</li>`;
 	}
 
-	renderTemplate(){
+	renderContent(){
 		let makeNodes = node=>typeof node == "object" ? node : {
 			text:node
 			,attrs:{}
@@ -26,7 +27,7 @@ export default class List extends HyperComponent {
 
 		return this.tpl`
 			<ul>${
-				this.model.items.map(makeNodes).map(
+				this.items.map(makeNodes).map(
 					(...args)=>this.renderItem(...args)
 				)
 			}</ul>

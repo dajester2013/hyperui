@@ -1,7 +1,7 @@
-import HyperComponent from "./component/HyperComponent.js"
+
 import style from "./Panel.scss";
-import config from "../util/decorator/config.js";
-import Container from "./Container.js";
+import config from "../../util/decorator/config.js";
+import Container from "./Container";
 
 // console.log("panel layout", style)
 

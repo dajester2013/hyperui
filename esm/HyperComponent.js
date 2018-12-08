@@ -1,7 +1,7 @@
-import {bind,wire} from "../../util/dom";
-import config from "../../util/decorator/config";
-import "../../util/hyper-intents";
-import {SYM_MODEL,SYM_ATTRS,SYM_RENDERED, SYM_ID} from "../../util/symbols";
+import {bind,wire} from "./util/dom.js";
+import config from "./util/decorator/config.js";
+import "./util/hyper-intents.js";
+import {SYM_MODEL,SYM_ATTRS,SYM_RENDERED, SYM_ID} from "./util/symbols.js";
 import { EventEmitter } from "events";
 
 const PLACEHOLDER = wire(null)`<place-holder/>`;

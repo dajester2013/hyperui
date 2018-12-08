@@ -4,17 +4,16 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"examples": "parcel ./examples/index.html",
-		"webpack": "webpack-dev-server"
+		"examples": "webpack-dev-server --mode development --config webpack.config.examples.js",
+		"build": "webpack --mode production"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"deepmerge": "^2.2.1",
 		"hyperhtml": "^2.14.0",
-		"postcss": "^7.0.5",
-		"postcss-modules": "^1.4.1",
-		"postcss-sass": "^0.3.3"
+		"is-mergeable-object": "^1.1.0",
+		"javascript-decorators": "^1.1.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.0",
@@ -29,8 +28,8 @@
 		"babel-preset-stage-0": "^6.24.1",
 		"css-loader": "^2.0.0",
 		"hyperhtml-element": "^3.1.0",
+		"mini-css-extract-plugin": "^0.5.0",
 		"node-sass": "^4.9.4",
-		"parcel-bundler": "^1.10.3",
 		"sass": "^1.15.2",
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.1",

@@ -5,7 +5,7 @@ import {
 hyper.define('hyper-attrs', (() => {
 	const attrCache = new WeakMap();
 
-	return (el, dataAttrs) => {
+	return (el, dataAttrs={}) => {
 		const newAttrs = new Set();
 		const prevAttrs = attrCache.get(el);
 

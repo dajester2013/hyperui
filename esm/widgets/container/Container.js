@@ -1,6 +1,6 @@
-import HyperComponent from "./component/HyperComponent.js"
-import config from "../util/decorator/config.js";
-import { createComponentUpdateProxy } from "../util/updaterproxy.js";
+import HyperComponent from "../../HyperComponent.js";
+import config from "../../util/decorator/config.js";
+import { createComponentUpdateProxy } from "../../util/updaterproxy.js";
 
 @config({
 	items: []
@@ -9,6 +9,7 @@ export default class Container extends HyperComponent {
 
 	constructor(...args) {
 		super(...args);
+		console.log(args[0])
 	}
 
 	set items(items) {

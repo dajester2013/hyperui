@@ -1,11 +1,14 @@
 const path = require("path");
 
 module.exports = {
-	entry:"./index.js"
+	mode:"development"
+	,entry:{
+		examples: "./examples/index.js"
+	}
 
 	,output: {
-		filename:"hyperui.min.js"
-		,path: path.join(__dirname, "dist")
+		filename:"[name].bundle.js"
+		,path: path.join(__dirname, "examples/dist")
 	}
 
 	,module: {
@@ -18,12 +21,38 @@ module.exports = {
 						loader:"css-loader"
 						,options:{
 							modules: true
+							// ,localIdentName: '[name]__[local]'
 						}
 					}
 					
 					,"sass-loader"
 				]
 				,issuer: /\.[tj]s$/
+			}
+
+			,{
+				test:/\.scss$/
+				,use: [
+					"css-loader","sass-loader"
+				]
+				,issuer: /\.html$/
+			}
+
+
+			,{
+				test:/\.css$/
+				,use: [
+					"style-loader","css-loader"
+				]
+				,issuer: /\.[tj]s$/
+			}
+
+			,{
+				test:/\.css$/
+				,use: [
+					"css-loader"
+				]
+				,issuer: /\.html$/
 			}
 
 			,{

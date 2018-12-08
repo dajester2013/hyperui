@@ -1,16 +1,19 @@
-import HyperComponent from "../widgets/component/HyperComponent";
+import HyperComponent from "../HyperComponent";
 import { isPrimitive } from "util";
+import Wire from "hyperhtml/esm/classes/Wire";
 
 const defaultProxyOptions = {
-	revocable: false
- ,isProxyable: (item) =>
-				 !isPrimitive(item) 
-		 &&	!(item instanceof HTMLElement) 
-		 &&	!(item instanceof HyperComponent)
-		 &&	(
-					 item instanceof Object 
-				 || Array.isArray(item)
-		 )
+	 revocable: false
+	,isProxyable: (item) => {
+		console.log(item, item instanceof Wire)
+		return	!isPrimitive(item) 
+				&&	!(item instanceof HTMLElement) 
+				&&	!(item instanceof HyperComponent)
+				&&	(
+							item instanceof Object 
+						|| Array.isArray(item)
+				)
+ }
 }
 
 function createUpdateHandler (self, options) { return self instanceof HyperComponent && {

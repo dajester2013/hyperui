@@ -1,5 +1,5 @@
 import {wire as _wire, bind as _bind} from "hyperhtml";
-import HyperComponent from "../widgets/component/HyperComponent";
+import HyperComponent from "../HyperComponent";
 
 const renderHyperComponents = (item)=> {
 	if (item instanceof HyperComponent) return item.render();
