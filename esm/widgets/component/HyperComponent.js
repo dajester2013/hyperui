@@ -1,13 +1,10 @@
-import {hyper,bind,wire} from "hyperhtml";
+import {bind,wire} from "../../util/dom";
 import config from "../../util/decorator/config";
 import "../../util/hyper-intents";
+import {SYM_MODEL,SYM_ATTRS,SYM_RENDERED, SYM_ID} from "../../util/symbols";
+import { EventEmitter } from "events";
 
-const SYM_MODEL = Symbol("HyperModel");
-const SYM_ATTRS = Symbol("HyperAttributes");
-const SYM_RENDERED = Symbol("HyperComponentRendered");
-
-
-const PLACEHOLDER = hyper`<place-holder/>`;
+const PLACEHOLDER = wire(null)`<place-holder/>`;
 
 /**
  * a generic proxy handler that watches for sets and forces a rerender
@@ -35,18 +32,31 @@ function isPrimitive(v) {
 	return v == null || (typeof v !== 'function' && typeof v !== 'object');
 }
 
+let instances = 0;
+
 /**
  * Unlike an element, this is a view that can be rendered to a specific element
  */
 @config({})
-export default class HyperComponent {
+export default class HyperComponent extends EventEmitter {
 
 	constructor(config={}) {
+		super();
 		this.placeholder = PLACEHOLDER;
 
 		Object.assign(this, config);
 
 		this.tpl = this.getTpl();
+		this[SYM_ID] = `hc-${instances++}`;
+	}
+
+	set id(id) {
+		this[SYM_ID] = id;
+		this.rendered && this.render();
+	}
+
+	get id() {
+		return this[SYM_ID];
 	}
 
 	getTpl(obj=this, typeOrId) {
@@ -78,15 +88,20 @@ export default class HyperComponent {
 		return wire(this)``;
 	}
 
-	render(target) {
-		var tpl = this.renderTemplate();
+	render(target=this.__target, tpl) {
+		if (!this.emit("beforerender")) {
+			tpl = tpl || this.renderTemplate();
 
-		this[SYM_RENDERED] = true;
+			this.emit("rendered", tpl);
 
-		if (target) {
-			bind(target)`${tpl}`;
-		} else {
-			return tpl;
+			this[SYM_RENDERED] = true;
+			
+			if (target) {
+				this.__target = target;
+				bind(target)`${tpl}`;
+			} else {
+				return tpl;
+			}
 		}
 	}
 

@@ -1,4 +1,5 @@
 import HyperComponent from "../widgets/component/HyperComponent";
+import { isPrimitive } from "util";
 
 const defaultProxyOptions = {
 	revocable: false
@@ -14,16 +15,20 @@ const defaultProxyOptions = {
 
 function createUpdateHandler (self, options) { return self instanceof HyperComponent && {
 	set(obj,prop,value) {
-		obj[prop] = options.isProxyable(value) ? value : new Proxy(value,createUpdateHandler(self));
+		obj[prop] = options.isProxyable(value) ? new Proxy(value,createUpdateHandler(self)) : value;
 
-		self.render();
+		if (obj instanceof Array && prop == "length") return true;
+
+		self.rendered && self.render();
 
 		return true;
 	}
 	,deleteProperty(obj,prop,value) {
 		obj[prop] = undefined;
 
-		self.render();
+		if (self instanceof Array && prop == "length") return true;
+
+		self.rendered && self.render();
 
 		return true;
 	}

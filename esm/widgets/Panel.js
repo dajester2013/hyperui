@@ -1,13 +1,14 @@
 import HyperComponent from "./component/HyperComponent.js"
 import style from "./Panel.scss";
 import config from "../util/decorator/config.js";
+import Container from "./Container.js";
 
-console.log("panel layout", style)
+// console.log("panel layout", style)
 
 @config({
 	title:null
 })
-export default class Panel extends HyperComponent {
+export default class Panel extends Container {
 
 	constructor(...args) {
 		super(...args);
@@ -23,23 +24,14 @@ export default class Panel extends HyperComponent {
 	}
 
 	renderTemplate() {
-		// window.panelLayout = panelLayout;
 		return this.tpl`<div class=${style.panel} hyper-attrs=${{
-				style:{
-					height:100
-					,width:600
-					,margin:30
-				}
+				style:{margin:"5px"}
 			}}>${
 				this.title?this.getTpl(this,":title")`<div class=${style.header}>${this.title}</div>`:null
 				}<div class=${style.body}>${
 					this.renderContent()
 				}</div>
 			</div>`;
-	}
-
-	renderContent() {
-		return this.placeholder;
 	}
 
 }

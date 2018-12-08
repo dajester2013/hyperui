@@ -25,11 +25,11 @@ export default class List extends HyperComponent {
 		};
 
 		return this.tpl`
-			<ul>
-				${this.model.items.map(makeNodes).map(
+			<ul>${
+				this.model.items.map(makeNodes).map(
 					(...args)=>this.renderItem(...args)
-				)}
-			</ul>
+				)
+			}</ul>
 		`;
 	}
 

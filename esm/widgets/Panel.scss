@@ -19,7 +19,24 @@ $panel-border-color:#ccc;
 
         .body {
             flex: 1;
-            // border:1px solid green;
+			
+			
+
+			.layout {
+				.vbox,.hbox,.fit {
+					display:flex;
+				}
+
+				.vbox,.fit {
+					flex-direction: column;
+				}
+
+				.hbox {
+					flex-direction: row;
+				}
+			}
+
+
         }
     }
 }

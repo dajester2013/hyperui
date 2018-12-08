@@ -1,5 +1,4 @@
 import HyperComponent from "./component/HyperComponent";
-import { wire } from "hyperhtml";
 
 export default class PlainText extends HyperComponent {
 	
@@ -20,7 +19,7 @@ export default class PlainText extends HyperComponent {
 	}
 
 	renderTemplate() {
-		return wire(this)`${this.model.text}`;
+		return this.tpl`${this.model.text}`;
 	}
 
 
