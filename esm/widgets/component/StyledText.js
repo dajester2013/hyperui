@@ -13,7 +13,7 @@ export default class StyledText extends HyperComponent {
 	}
 
 	renderTemplate() {
-		return this.tpl`<span style=${this.model.style}>${this.model.text}</span>`;
+		return this.html`<span style=${this.model.style}>${this.model.text}</span>`;
 	}
 
 

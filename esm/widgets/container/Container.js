@@ -1,15 +1,23 @@
 import HyperComponent from "../../HyperComponent.js";
 import config from "../../util/decorator/config.js";
 import { createComponentUpdateProxy } from "../../util/updaterproxy.js";
+import AutoElComponent from "../../AutoElComponent.js";
 
 @config({
 	items: []
 })
-export default class Container extends HyperComponent {
+export default class Container extends AutoElComponent {
 
 	constructor(...args) {
 		super(...args);
-		console.log(args[0])
+		this.contentTpl = this.getTpl(this, ":container-contents");
+	}
+
+	set content(content) {
+		this.items = [content];
+	}
+	get content() {
+		return this.items.length && this.items[0] || null;
 	}
 
 	set items(items) {

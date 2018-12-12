@@ -3,12 +3,22 @@ import style from "./Panel.scss";
 import config from "../../util/decorator/config.js";
 import Container from "./Container";
 
-// console.log("panel layout", style)
+console.log("panel layout", style)
 
 @config({
 	title:null
+
+	,theme: style
+
+	,cls: [style.panel]
+
+	,style: {
+		flex: 1
+	}
 })
 export default class Panel extends Container {
+
+	static style = style;
 
 	constructor(...args) {
 		super(...args);
@@ -24,14 +34,11 @@ export default class Panel extends Container {
 	}
 
 	renderTemplate() {
-		return this.tpl`<div class=${style.panel} hyper-attrs=${{
-				style:{margin:"5px"}
-			}}>${
-				this.title?this.getTpl(this,":title")`<div class=${style.header}>${this.title}</div>`:null
-				}<div class=${style.body}>${
-					this.renderContent()
-				}</div>
-			</div>`;
+		return this.html`${
+			this.title?this.getTpl(this,":title")`<div class=${this.theme.header}>${this.title}</div>`:null
+		}<div class=${this.theme.body}>${
+			this.renderContent()
+		}</div>`;
 	}
 
 }

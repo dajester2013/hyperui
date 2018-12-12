@@ -1,4 +1,4 @@
-import HyperComponent from "../../HyperComponent";
+import HyperComponent from "../../HyperComponent.js";
 
 export default class PlainText extends HyperComponent {
 	
@@ -19,7 +19,7 @@ export default class PlainText extends HyperComponent {
 	}
 
 	renderTemplate() {
-		return this.tpl`${this.model.text}`;
+		return this.html`${this.model.text}`;
 	}
 
 

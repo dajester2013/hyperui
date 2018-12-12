@@ -46,7 +46,8 @@ export default class HyperComponent extends EventEmitter {
 
 		Object.assign(this, config);
 
-		this.tpl = this.getTpl();
+		this.html = this.getTpl();
+		this.tpl = this.html;
 		this[SYM_ID] = `hc-${instances++}`;
 	}
 
@@ -85,7 +86,7 @@ export default class HyperComponent extends EventEmitter {
 	}
 
 	renderTemplate() {
-		return wire(this)``;
+		return this.html``;
 	}
 
 	render(target=this.__target, tpl) {

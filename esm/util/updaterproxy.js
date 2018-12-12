@@ -5,7 +5,6 @@ import Wire from "hyperhtml/esm/classes/Wire";
 const defaultProxyOptions = {
 	 revocable: false
 	,isProxyable: (item) => {
-		console.log(item, item instanceof Wire)
 		return	!isPrimitive(item) 
 				&&	!(item instanceof HTMLElement) 
 				&&	!(item instanceof HyperComponent)

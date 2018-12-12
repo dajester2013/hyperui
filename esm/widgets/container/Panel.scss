@@ -6,7 +6,7 @@ $panel-border-color:#ccc;
         position: relative;
         padding:0px;
         border:$panel-border-width solid $panel-border-color;
-    
+
         display: -webkit-flex;
         display: flex;
         flex-direction: column;
@@ -19,22 +19,20 @@ $panel-border-color:#ccc;
 
         .body {
             flex: 1;
-			
-			
+            
+            
 
-			.layout {
-				.vbox,.hbox,.fit {
-					display:flex;
-				}
+            .vbox,.hbox,.fit {
+                display:flex;
+            }
 
-				.vbox,.fit {
-					flex-direction: column;
-				}
+            .vbox,.fit {
+                flex-direction: column;
+            }
 
-				.hbox {
-					flex-direction: row;
-				}
-			}
+            .hbox {
+                flex-direction: row;
+            }
 
 
         }

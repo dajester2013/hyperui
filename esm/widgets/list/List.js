@@ -25,7 +25,7 @@ export default class List extends Container {
 			,attrs:{}
 		};
 
-		return this.tpl`
+		return this.html`
 			<ul>${
 				this.items.map(makeNodes).map(
 					(...args)=>this.renderItem(...args)

@@ -2,10 +2,11 @@
 	"name": "hyperui",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "dist/hyperui.bundle.js",
 	"scripts": {
 		"examples": "webpack-dev-server --mode development --config webpack.config.examples.js",
-		"build": "webpack --mode production"
+		"build": "webpack --mode production",
+		"start": "webpack --watch --mode production"
 	},
 	"author": "",
 	"license": "ISC",
